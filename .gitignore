@@ -1,21 +1,10 @@
-# Python virtual environment
 venv/
-.venv/
-
-# Python cache
 __pycache__/
-*.py[cod]
-
-# Environment variables
+*.pyc
+.DS_Store
 .env
 
-# Jupyter Notebook
-.ipynb_checkpoints/
-
-# IDE
-.vscode/
-.idea/
-
-# OS files
-.DS_Store
-Thumbs.db
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
