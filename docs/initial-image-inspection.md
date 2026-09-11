@@ -1,6 +1,6 @@
 # Initial Image Inspection
 
-## ১. Image Information
+## 1. Image Information
 
 - File name: `ohrc_01.tif`
 - Instrument: OHRC
@@ -15,7 +15,7 @@
 - Minimum pixel value: `0`
 - Maximum pixel value: `255`
 
-## ২. Visual Observation
+## 2. Visual Observation
 
 The image contains a lunar surface captured by the Chandrayaan-2 OHRC instrument.
 
@@ -41,7 +41,7 @@ The lunar surface contains several visible features, including:
 
 The image appears to be a three-channel image. The pixel values range from 0 to 255, which is consistent with an 8-bit image.
 
-## ৩. Image Quality
+## 3. Image Quality
 
 - Image clarity: The lunar surface features are visible.
 - Brightness: Different bright and dark regions are present.
@@ -50,7 +50,7 @@ The image appears to be a three-channel image. The pixel values range from 0 to 
 - Annotation: The image contains text, labels, and a red box.
 - Raw image status: This appears to be an annotated image rather than a raw satellite image.
 
-## ৪. Initial Problems
+## 4. Initial Problems
 
 The following problems may affect image matching:
 
@@ -62,7 +62,7 @@ The following problems may affect image matching:
 6. The image may not be suitable for direct quantitative evaluation.
 7. The actual raw OHRC image still needs to be collected and inspected.
 
-## ৫. Important Image Details
+## 5. Important Image Details
 
 The displayed image mentions the following information:
 
@@ -74,7 +74,7 @@ The displayed image mentions the following information:
 
 These details are visible in the image, but they should be verified from the original data source or metadata before being used in the final project.
 
-## ৬. Conclusion
+## 6. Conclusion
 
 The image was successfully loaded using OpenCV.
 
