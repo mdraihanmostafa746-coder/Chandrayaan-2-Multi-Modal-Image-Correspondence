@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 import cv2
@@ -9,7 +8,7 @@ def reliable_match(
     image_path_1: str,
     image_path_2: str,
     output_path: str,
-) -> None:
+) -> tuple[int, int]:
     image_1 = cv2.imread(image_path_1, cv2.IMREAD_GRAYSCALE)
     image_2 = cv2.imread(image_path_2, cv2.IMREAD_GRAYSCALE)
 
@@ -27,7 +26,7 @@ def reliable_match(
 
     if descriptors_1 is None or descriptors_2 is None:
         print("Not enough features.")
-        return
+        return 0, 0
 
     matcher = cv2.BFMatcher(cv2.NORM_HAMMING)
 
@@ -94,6 +93,8 @@ def reliable_match(
     print("Ratio-test matches:", len(ratio_matches))
     print("RANSAC inlier matches:", len(inlier_matches))
     print("Saved:", output)
+
+    return len(ratio_matches), len(inlier_matches)
 
 
 if __name__ == "__main__":
