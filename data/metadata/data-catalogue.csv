@@ -1,3 +1,6 @@
 file_name,instrument,source,format,width,height,location,metadata_available,paired_file,notes
 chandrayaan2_11_large.png.webp,OHRC,ISRO,Web image,1000 px,936 px,Lunar surface,YES,YES,Image shows lunar boulders/craters; image annotation gives ~100 km altitude, 30 cm pixel resolution, 7.8° Sun elevation, 05 Sept 2019
 tmc-2-1_large.png.webp,TMC-2,ISRO,WebP,1000,936,"Sommerfeld & Kirkwood craters, lunar farside",YES,YES,"Actual lunar surface with craters; ISRO image identifies Sommerfeld and Kirkwood craters. Scientific product metadata is available in PDS4/XML. TMC-2 provides fore/nadir/aft stereo views. Coordinates: Sommerfeld 65.2°N, 162.4°W."
+ohrc_image_04.webp,OHRC,ISRO,Web Image: WEBP (Scientific Product: PDS4),1000 px,936 px,Lunar Surface (Polar and Equatorial regions),YES,YES,Paired with IIRS/TMC location data; detailed lunar boulders and craters view
+ohrc_image_03.webp,OHRC,ISRO,Web Image: WEBP (Scientific Product: PDS4, XML label),1000 px,936 px,Lunar Surface - Near Boguslawsky E Region,YES,YES,High-resolution view of complex craters; part of polar mosaic; detailed data available
+ohrc_image_16.webp,OHRC,ISRO,Web Image: WEBP (Scientific Product: PDS4, XML label),1000 px,936 px,Lunar Surface - Near Boguslawsky E Region,YES,YES,Unique 4th scene from data set; intricate craters and massif view; altitude ~100 km, resolution 30 cm, 7.8° Sun elevation
