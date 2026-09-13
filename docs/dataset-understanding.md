@@ -31,3 +31,15 @@ The pipeline includes:
 
 The processed images will be used for cropping, feature extraction, and image matching experiments.
 
+## Overlapping Crop Generation
+
+The processed grayscale images were divided into fixed-size overlapping crops.
+
+- Crop size: 256 × 256 pixels
+- Overlap: 25%
+- Step size: 192 pixels
+- Only complete crops were saved
+- Crops were generated separately for each image
+
+These crops will be used for local feature extraction and image correspondence experiments.
+
