@@ -1,0 +1,6 @@
+file_name,instrument,file_path,actual_width,actual_height,channels,data_type,min_pixel,max_pixel,mean_pixel,std_pixel
+chandrayaan2_11_large copy.png.webp,OHRC,data/raw/ohrc/chandrayaan2_11_large copy.png.webp,1023,956,3,uint8,0,255,54.7241,61.0496
+tmc-2-1_large.png.webp,TMC-2,data/raw/tmc/tmc-2-1_large.png.webp,1023,956,3,uint8,0,255,79.7181,51.9194
+ohrc_image_04.webp,OHRC,data/raw/ohrc/ohrc_image_04.webp,512,484,3,uint8,0,255,71.0484,49.9678
+ohrc_image_03.webp,OHRC,data/raw/ohrc/ohrc_image_03.webp,464,466,3,uint8,0,255,71.6691,41.5465
+ohrc_image_16.webp,OHRC,data/raw/ohrc/ohrc_image_16.webp,473,405,3,uint8,0,255,84.5615,51.6846
