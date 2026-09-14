@@ -1,0 +1,6 @@
+scale,keypoints_image_1,keypoints_scaled_image_2,good_matches,matching_score
+0.5,490,99,24,0.96
+0.75,490,274,40,0.6667
+1.0,490,500,46,0.5974
+1.5,490,897,52,0.5977
+2.0,490,995,75,0.5814
