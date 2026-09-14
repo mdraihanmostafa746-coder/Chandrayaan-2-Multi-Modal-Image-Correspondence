@@ -1,0 +1,2 @@
+method,keypoints_image_1,keypoints_image_2,total_matches,good_matches,ransac_inliers,matching_score,inlier_ratio
+Improved ORB + CLAHE,620,514,73,39,9,0.5342,0.2308
