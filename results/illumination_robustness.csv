@@ -1,0 +1,8 @@
+condition,brightness,contrast,gamma,keypoints_image_1,keypoints_image_2,good_matches,matching_score
+normal,0,1.0,1.0,490,500,46,0.5974
+bright,40,1.0,1.0,490,504,42,0.56
+dark,-40,1.0,1.0,490,478,47,0.6026
+high_contrast,0,1.5,1.0,490,507,42,0.5753
+low_contrast,0,0.6,1.0,490,472,43,0.6056
+gamma_bright,0,1.0,0.6,490,546,34,0.5484
+gamma_dark,0,1.0,1.8,490,493,51,0.6986
