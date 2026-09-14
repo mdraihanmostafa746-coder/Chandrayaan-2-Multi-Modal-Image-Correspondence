@@ -1,0 +1,6 @@
+method,keypoints_image_1,keypoints_image_2,good_matches,matching_score
+original,490,500,46,0.5974
+clahe,579,514,39,0.5342
+histogram_equalization,705,812,49,0.3798
+gaussian_blur,399,488,45,0.7377
+normalization,490,500,46,0.5974
