@@ -1,0 +1,16 @@
+image_1,image_2,orb_keypoints_1,orb_keypoints_2,orb_good_matches,orb_score,sift_keypoints_1,sift_keypoints_2,sift_good_matches,sift_score,better_method
+crop_000.png,crop_001.png,490,500,46,0.5974,256,258,39,0.1523,ORB
+crop_001.png,crop_002.png,500,548,119,0.7041,258,265,91,0.3527,ORB
+crop_002.png,crop_003.png,548,176,49,0.6203,265,233,74,0.2792,ORB
+crop_003.png,crop_004.png,176,791,18,0.2769,233,690,2,0.0086,ORB
+crop_004.png,crop_005.png,791,848,65,0.3171,690,931,157,0.2275,ORB
+crop_005.png,crop_006.png,848,838,76,0.3028,931,988,227,0.2438,ORB
+crop_006.png,crop_007.png,838,859,80,0.3213,988,1000,233,0.2358,ORB
+crop_007.png,crop_008.png,859,829,64,0.27,1000,752,3,0.003,ORB
+crop_008.png,crop_009.png,829,867,94,0.3821,752,1001,185,0.246,ORB
+crop_009.png,crop_010.png,867,867,100,0.4425,1001,1000,232,0.2318,ORB
+crop_010.png,crop_011.png,867,856,108,0.4696,1000,1000,226,0.226,ORB
+crop_011.png,crop_012.png,856,416,52,0.391,1000,394,8,0.008,ORB
+crop_012.png,crop_013.png,416,850,51,0.4016,394,821,179,0.4543,SIFT
+crop_013.png,crop_014.png,850,820,116,0.5249,821,929,112,0.1364,ORB
+crop_014.png,crop_015.png,820,905,107,0.4421,929,1000,168,0.1808,ORB
