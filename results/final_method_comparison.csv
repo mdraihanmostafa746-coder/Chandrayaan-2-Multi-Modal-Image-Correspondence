@@ -1,3 +1,5 @@
-method,keypoints_image_1,keypoints_image_2,total_matches,good_matches,ransac_inliers,matching_score,inlier_ratio
-ORB + Gaussian Blur,399,488,,45,,0.7377,
-ORB + CLAHE,620,514,73.0,39,9.0,0.5342,0.2308
+method,keypoints_image_1,keypoints_image_2,good_matches,matching_score
+ORB + Gaussian Blur,399,488,45,0.7377
+ORB,490,500,46,0.5974
+ORB + CLAHE,620,514,39,0.5342
+SIFT,256,258,39,0.1523
