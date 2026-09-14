@@ -4,3 +4,6 @@ tmc-2-1_large.png.webp,TMC-2,data/raw/tmc/tmc-2-1_large.png.webp,1023,956,3,uint
 ohrc_image_04.webp,OHRC,data/raw/ohrc/ohrc_image_04.webp,512,484,3,uint8,0,255,71.0484,49.9678
 ohrc_image_03.webp,OHRC,data/raw/ohrc/ohrc_image_03.webp,464,466,3,uint8,0,255,71.6691,41.5465
 ohrc_image_16.webp,OHRC,data/raw/ohrc/ohrc_image_16.webp,473,405,3,uint8,0,255,84.5615,51.6846
+ch2_ohr_ncp_20260103T1005176450_b_brw_d18.png,orbiter high resolution camera,data/raw/ohrc/ch2_ohr_ncp_20260103T1005176450_b_brw_d18.png,1200,10107,1,uint8,0,255,49.8595,36.0576
+ch2_iir_ndi_20240518T0136331875_b_brf_d18_srd.png,IIRS,data/raw/iir/ch2_iir_ndi_20240518T0136331875_b_brf_d18_srd.png,250,12077,1,uint8,0,255,77.472,16.3875
+ch2_iir_ndi_20250728T1201421887_b_brf_d18_srd.png,IIRS,data/raw/iir/ch2_iir_ndi_20250728T1201421887_b_brf_d18_srd.png,250,13018,1,uint8,0,255,135.5736,14.9788
