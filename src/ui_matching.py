@@ -33,7 +33,7 @@ def run_orb_matching(image_1_bytes, image_2_bytes):
         0
     )
 
-    # ORB detector
+    # ORB feature detection
     orb = cv2.ORB_create(
         nfeatures=1000
     )
@@ -62,6 +62,7 @@ def run_orb_matching(image_1_bytes, image_2_bytes):
         k=2
     )
 
+    # Lowe's ratio test
     good_matches = []
 
     for pair in matches:
@@ -73,12 +74,49 @@ def run_orb_matching(image_1_bytes, image_2_bytes):
             if first_match.distance < 0.75 * second_match.distance:
                 good_matches.append(first_match)
 
+    # Matching score
     matching_score = len(good_matches) / max(
         len(keypoints_1),
         len(keypoints_2),
         1
     )
 
+    # RANSAC verification
+    inlier_matches = []
+
+    if len(good_matches) >= 4:
+
+        points_1 = np.float32([
+            keypoints_1[match.queryIdx].pt
+            for match in good_matches
+        ]).reshape(-1, 1, 2)
+
+        points_2 = np.float32([
+            keypoints_2[match.trainIdx].pt
+            for match in good_matches
+        ]).reshape(-1, 1, 2)
+
+        homography, mask = cv2.findHomography(
+            points_1,
+            points_2,
+            cv2.RANSAC,
+            5.0
+        )
+
+        if mask is not None:
+
+            inlier_matches = [
+                match
+                for match, flag in zip(
+                    good_matches,
+                    mask.ravel()
+                )
+                if flag == 1
+            ]
+
+    ransac_inliers = len(inlier_matches)
+
+    # Draw matched keypoints
     matched_image = cv2.drawMatches(
         image_1,
         keypoints_1,
@@ -93,6 +131,7 @@ def run_orb_matching(image_1_bytes, image_2_bytes):
         "keypoints_1": len(keypoints_1),
         "keypoints_2": len(keypoints_2),
         "good_matches": len(good_matches),
+        "ransac_inliers": ransac_inliers,
         "matching_score": matching_score,
         "matched_image": matched_image
     }
