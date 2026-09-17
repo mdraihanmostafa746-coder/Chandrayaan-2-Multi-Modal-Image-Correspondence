@@ -1,12 +1,23 @@
 import streamlit as st
 
+from src.ui_matching import run_orb_matching
+
+
+# --------------------------------------------------
+# Page Configuration
+# --------------------------------------------------
+
 st.set_page_config(
     page_title="Chandrayaan-2 Image Correspondence",
     page_icon="🛰️",
     layout="wide"
 )
 
-# ---------- Custom Styling ----------
+
+# --------------------------------------------------
+# Custom CSS
+# --------------------------------------------------
+
 st.markdown(
     """
     <style>
@@ -29,28 +40,28 @@ st.markdown(
     .subtitle {
         color: #aebed6;
         font-size: 16px;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
     }
 
     .section-card {
         background: #12243d;
         padding: 25px;
         border-radius: 15px;
-        border: 1px solid #243b5a;
+        border: 1px solid #294361;
         margin-bottom: 20px;
     }
 
     .feature-card {
         background: #10213a;
-        padding: 20px;
+        padding: 22px;
         border-radius: 12px;
         text-align: center;
         border: 1px solid #294361;
     }
 
     .feature-title {
-        color: #ffffff;
-        font-size: 18px;
+        color: white;
+        font-size: 19px;
         font-weight: 600;
     }
 
@@ -58,20 +69,30 @@ st.markdown(
         color: #aebed6;
         font-size: 14px;
     }
-
-    .metric-card {
-        background: #142a47;
-        padding: 20px;
-        border-radius: 12px;
-        text-align: center;
-        border: 1px solid #315174;
-    }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# ---------- Sidebar ----------
+
+# --------------------------------------------------
+# Session State
+# --------------------------------------------------
+
+if "image_1" not in st.session_state:
+    st.session_state.image_1 = None
+
+if "image_2" not in st.session_state:
+    st.session_state.image_2 = None
+
+if "matching_result" not in st.session_state:
+    st.session_state.matching_result = None
+
+
+# --------------------------------------------------
+# Sidebar Navigation
+# --------------------------------------------------
+
 st.sidebar.title("🛰️ Chandrayaan-2")
 st.sidebar.caption("Image Correspondence")
 
@@ -90,7 +111,11 @@ st.sidebar.caption("Better Images")
 st.sidebar.caption("Better Insights")
 st.sidebar.caption("From Space")
 
-# ---------- Home ----------
+
+# --------------------------------------------------
+# Home Page
+# --------------------------------------------------
+
 if page == "Home":
 
     st.markdown(
@@ -148,16 +173,20 @@ if page == "Home":
         st.markdown(
             """
             <div class="feature-card">
-                <h3>🛡️ RANSAC</h3>
+                <h3>🛡️ RANSAC Verification</h3>
                 <p class="feature-text">
-                Remove incorrect matches and verify reliable points.
+                Verify reliable feature correspondences.
                 </p>
             </div>
             """,
             unsafe_allow_html=True
         )
 
-# ---------- Image Upload ----------
+
+# --------------------------------------------------
+# Image Upload Page
+# --------------------------------------------------
+
 elif page == "Image Upload":
 
     st.markdown(
@@ -166,51 +195,76 @@ elif page == "Image Upload":
     )
 
     st.markdown(
-        '<div class="subtitle">Upload two images for correspondence analysis.</div>',
+        '<div class="subtitle">Upload two satellite images for correspondence analysis.</div>',
         unsafe_allow_html=True
     )
 
     col1, col2 = st.columns(2)
 
     with col1:
+
         st.subheader("First Image")
-        image_1 = st.file_uploader(
-            "Upload first satellite image",
+
+        uploaded_image_1 = st.file_uploader(
+            "Choose the first image",
             type=["png", "jpg", "jpeg", "webp"],
-            key="image_1"
+            key="uploaded_image_1"
         )
 
-        if image_1:
-            st.image(
-                image_1,
-                caption="Image 1",
-                use_container_width=True
-            )
+        if uploaded_image_1 is not None:
+            st.session_state.image_1 = uploaded_image_1
 
     with col2:
+
         st.subheader("Second Image")
-        image_2 = st.file_uploader(
-            "Upload second satellite image",
+
+        uploaded_image_2 = st.file_uploader(
+            "Choose the second image",
             type=["png", "jpg", "jpeg", "webp"],
-            key="image_2"
+            key="uploaded_image_2"
         )
 
-        if image_2:
+        if uploaded_image_2 is not None:
+            st.session_state.image_2 = uploaded_image_2
+
+    st.markdown("---")
+
+    preview_col1, preview_col2 = st.columns(2)
+
+    with preview_col1:
+
+        if st.session_state.image_1 is not None:
             st.image(
-                image_2,
-                caption="Image 2",
+                st.session_state.image_1,
+                caption="Image 1 Preview",
                 use_container_width=True
             )
+        else:
+            st.info("No first image selected.")
 
-    if image_1 and image_2:
-        
-        st.session_state["image_1"] = image_1
-        st.session_state["image_2"] = image_2
+    with preview_col2:
 
-        st.success("Both images uploaded successfully.")
-        st.info("Now go to the Feature Matching section.")
+        if st.session_state.image_2 is not None:
+            st.image(
+                st.session_state.image_2,
+                caption="Image 2 Preview",
+                use_container_width=True
+            )
+        else:
+            st.info("No second image selected.")
 
-# ---------- Feature Matching ----------
+    if (
+        st.session_state.image_1 is not None
+        and st.session_state.image_2 is not None
+    ):
+        st.success("Both images are ready for feature matching.")
+        st.info("Open the Feature Matching section from the sidebar.")
+
+
+# --------------------------------------------------
+# Feature Matching Page
+# --------------------------------------------------
+
 elif page == "Feature Matching":
 
     st.markdown(
@@ -223,78 +277,118 @@ elif page == "Feature Matching":
         unsafe_allow_html=True
     )
 
-    image_1 = st.session_state.get("image_1")
-    image_2 = st.session_state.get("image_2")
+    if (
+        st.session_state.image_1 is None
+        or st.session_state.image_2 is None
+    ):
 
-    if image_1 is None or image_2 is None:
-        st.warning("আগে Image Upload section থেকে দুইটি image upload করো।")
+        st.warning(
+            "Please upload both images from the Image Upload section first."
+        )
 
     else:
-        st.success("দুইটি image পাওয়া গেছে।")
+
+        st.success("Both images are loaded successfully.")
 
         col1, col2 = st.columns(2)
 
         with col1:
             st.image(
-                image_1,
+                st.session_state.image_1,
                 caption="Image 1",
                 use_container_width=True
             )
 
         with col2:
             st.image(
-                image_2,
+                st.session_state.image_2,
                 caption="Image 2",
                 use_container_width=True
             )
 
         st.markdown("---")
 
-        if st.button("▶ Run ORB Matching", use_container_width=True):
+        st.subheader("Matching Configuration")
 
-            with st.spinner("Matching চলছে..."):
+        detector = st.selectbox(
+            "Feature Detector",
+            ["ORB"],
+            index=0
+        )
 
-                result = run_orb_matching(
-                    image_1.getvalue(),
-                    image_2.getvalue()
-                )
+        st.write("Preprocessing: Gaussian Blur")
+        st.write("Matcher: BFMatcher with Hamming Distance")
+        st.write("Ratio Test: 0.75")
 
-                st.session_state["matching_result"] = result
+        if st.button(
+            "▶ Run ORB Matching",
+            type="primary",
+            use_container_width=True
+        ):
 
-            st.success("Matching complete!")
+            try:
 
-            col1, col2, col3 = st.columns(3)
+                with st.spinner("Running ORB feature matching..."):
 
-            with col1:
+                    result = run_orb_matching(
+                        st.session_state.image_1.getvalue(),
+                        st.session_state.image_2.getvalue()
+                    )
+
+                    st.session_state.matching_result = result
+
+                st.success("ORB matching completed successfully.")
+
+            except Exception as error:
+
+                st.error(f"Matching failed: {error}")
+
+        result = st.session_state.matching_result
+
+        if result is not None:
+
+            st.markdown("---")
+            st.subheader("Matching Results")
+
+            metric_col1, metric_col2, metric_col3, metric_col4 = st.columns(4)
+
+            with metric_col1:
                 st.metric(
                     "Keypoints Image 1",
                     result["keypoints_1"]
                 )
 
-            with col2:
+            with metric_col2:
                 st.metric(
                     "Keypoints Image 2",
                     result["keypoints_2"]
                 )
 
-            with col3:
+            with metric_col3:
                 st.metric(
                     "Good Matches",
                     result["good_matches"]
                 )
 
-            st.metric(
-                "Matching Score",
-                f'{result["matching_score"]:.4f}'
-            )
+            with metric_col4:
+                st.metric(
+                    "Matching Score",
+                    f'{result["matching_score"]:.4f}'
+                )
+
+            st.subheader("ORB Matched Keypoints")
 
             st.image(
                 result["matched_image"],
-                caption="ORB Matched Keypoints",
+                caption="ORB Feature Correspondences",
                 use_container_width=True
             )
 
-# ---------- Results ----------
+
+# --------------------------------------------------
+# Results Page
+# --------------------------------------------------
+
 elif page == "Results":
 
     st.markdown(
@@ -303,34 +397,50 @@ elif page == "Results":
     )
 
     st.markdown(
-        '<div class="subtitle">View matching statistics and verification results.</div>',
+        '<div class="subtitle">View the output of the image matching process.</div>',
         unsafe_allow_html=True
     )
 
-    col1, col2, col3, col4 = st.columns(4)
+    result = st.session_state.matching_result
 
-    with col1:
-        st.markdown(
-            '<div class="metric-card"><h3>0</h3><p>Keypoints 1</p></div>',
-            unsafe_allow_html=True
+    if result is None:
+
+        st.info(
+            "No matching result available. Upload two images and run ORB Matching first."
         )
 
-    with col2:
-        st.markdown(
-            '<div class="metric-card"><h3>0</h3><p>Keypoints 2</p></div>',
-            unsafe_allow_html=True
-        )
+    else:
 
-    with col3:
-        st.markdown(
-            '<div class="metric-card"><h3>0</h3><p>Good Matches</p></div>',
-            unsafe_allow_html=True
-        )
+        col1, col2, col3, col4 = st.columns(4)
 
-    with col4:
-        st.markdown(
-            '<div class="metric-card"><h3>0.000</h3><p>Matching Score</p></div>',
-            unsafe_allow_html=True
-        )
+        with col1:
+            st.metric(
+                "Keypoints Image 1",
+                result["keypoints_1"]
+            )
 
-    st.info("Run the matching process to display actual results.")
+        with col2:
+            st.metric(
+                "Keypoints Image 2",
+                result["keypoints_2"]
+            )
+
+        with col3:
+            st.metric(
+                "Good Matches",
+                result["good_matches"]
+            )
+
+        with col4:
+            st.metric(
+                "Matching Score",
+                f'{result["matching_score"]:.4f}'
+            )
+
+        st.subheader("Matched Keypoints Visualization")
+
+        st.image(
+            result["matched_image"],
+            caption="ORB Feature Correspondences",
+            use_container_width=True
+        )
