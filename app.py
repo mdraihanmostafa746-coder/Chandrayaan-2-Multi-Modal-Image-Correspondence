@@ -203,6 +203,10 @@ elif page == "Image Upload":
             )
 
     if image_1 and image_2:
+        
+        st.session_state["image_1"] = image_1
+        st.session_state["image_2"] = image_2
+
         st.success("Both images uploaded successfully.")
         st.info("Now go to the Feature Matching section.")
 
@@ -215,41 +219,80 @@ elif page == "Feature Matching":
     )
 
     st.markdown(
-        '<div class="subtitle">Configure the matching process.</div>',
+        '<div class="subtitle">Run ORB feature matching with Gaussian Blur preprocessing.</div>',
         unsafe_allow_html=True
     )
 
-    col1, col2, col3 = st.columns(3)
+    image_1 = st.session_state.get("image_1")
+    image_2 = st.session_state.get("image_2")
 
-    with col1:
-        detector = st.selectbox(
-            "Feature Detector",
-            ["ORB", "SIFT", "AKAZE"]
-        )
+    if image_1 is None or image_2 is None:
+        st.warning("আগে Image Upload section থেকে দুইটি image upload করো।")
 
-    with col2:
-        matcher = st.selectbox(
-            "Matcher",
-            ["BFMatcher", "FLANN"]
-        )
+    else:
+        st.success("দুইটি image পাওয়া গেছে।")
 
-    with col3:
-        threshold = st.number_input(
-            "RANSAC Threshold",
-            min_value=1.0,
-            max_value=20.0,
-            value=5.0,
-            step=1.0
-        )
+        col1, col2 = st.columns(2)
 
-    st.markdown("---")
+        with col1:
+            st.image(
+                image_1,
+                caption="Image 1",
+                use_container_width=True
+            )
 
-    if st.button("▶ Run Matching", use_container_width=True):
-        st.success("Matching configuration selected.")
-        st.write(f"Detector: **{detector}**")
-        st.write(f"Matcher: **{matcher}**")
-        st.write(f"RANSAC Threshold: **{threshold}**")
-        st.info("Actual matching pipeline will be connected in the next step.")
+        with col2:
+            st.image(
+                image_2,
+                caption="Image 2",
+                use_container_width=True
+            )
+
+        st.markdown("---")
+
+        if st.button("▶ Run ORB Matching", use_container_width=True):
+
+            with st.spinner("Matching চলছে..."):
+
+                result = run_orb_matching(
+                    image_1.getvalue(),
+                    image_2.getvalue()
+                )
+
+                st.session_state["matching_result"] = result
+
+            st.success("Matching complete!")
+
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.metric(
+                    "Keypoints Image 1",
+                    result["keypoints_1"]
+                )
+
+            with col2:
+                st.metric(
+                    "Keypoints Image 2",
+                    result["keypoints_2"]
+                )
+
+            with col3:
+                st.metric(
+                    "Good Matches",
+                    result["good_matches"]
+                )
+
+            st.metric(
+                "Matching Score",
+                f'{result["matching_score"]:.4f}'
+            )
+
+            st.image(
+                result["matched_image"],
+                caption="ORB Matched Keypoints",
+                use_container_width=True
+            )
 
 # ---------- Results ----------
 elif page == "Results":
