@@ -77,6 +77,6 @@ def cross_sensor_match(
 if __name__ == "__main__":
     cross_sensor_match(
         "data/raw/ohrc/chandrayaan2_11_large copy.png.webp",
-        "data/raw/ohrc/tmc-2-1_large.png.webp",
+        "data/raw/tmc/tmc-2-1_large.png.webp",
         "results/cross_sensor_matches.png",
     )
